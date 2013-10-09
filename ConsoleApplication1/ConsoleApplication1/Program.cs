@@ -9,66 +9,60 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            bool ujra = false;
             ConsoleKeyInfo asd;
             do
             {
                 Console.Clear();
-                Console.Write("1. feladat: 1");
-                Console.Write("\n2. feladat: 2");
-                Console.Write("\n3. feladat: 3");
-                Console.Write("\n4. feladat: 4");
-                Console.Write("\n5. feladat: 5");
-                Console.Write("\n6. feladat: 6");
-                Console.Write("\n7. feladat: 7");
-                Console.Write("\na. feladat: a");
-                Console.Write("\nb. feladat: b");
+                Console.Write("1. feladat: 1\n2. feladat: 2\n3. feladat: 3\n4. feladat: 4\n5. feladat: 5"+
+                    "\n6. feladat: 6\n7. feladat: 7\na. feladat: a\nb. feladat: b\nc. feladat: c");
 
                 asd = Console.ReadKey();
                 switch (asd.Key)
                 {
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
-                        ujra = Fel1();
+                        Fel1();
                         break;
                     case ConsoleKey.NumPad2:
                     case ConsoleKey.D2:
-                        ujra = Fel2();
+                        Fel2();
                         break;
                     case ConsoleKey.NumPad3:
                     case ConsoleKey.D3:
-                        ujra = Fel3();
+                        Fel3();
                         break;
                     case ConsoleKey.NumPad4:
                     case ConsoleKey.D4:
-                        ujra = Fel4();
+                        Fel4();
                         break;
                     case ConsoleKey.NumPad5:
                     case ConsoleKey.D5:
-                        ujra = Fel5();
+                        Fel5();
                         break;
                     case ConsoleKey.NumPad6:
                     case ConsoleKey.D6:
-                        ujra = Fel6();
+                        Fel6();
                         break;
                     case ConsoleKey.NumPad7:
                     case ConsoleKey.D7:
-                        ujra = Fel7();
+                        Fel7();
                         break;
                     case ConsoleKey.A:
-                        ujra = Fel8();
+                        Fel8();
                         break;
                     case ConsoleKey.B:
-                        ujra = Fel9();
+                        Fel9();
+                        break;
+                    case ConsoleKey.C:
+                        Fel10();
                         break;
                     default:
-                        ujra = true;
                         break;
                 }
-            } while (ujra && asd.Key != ConsoleKey.Escape);
+            } while (asd.Key != ConsoleKey.Escape);
         }
 
-        static bool Fel1()
+        static void Fel1()
         {
             Console.Clear();
             Console.Write("Neved: ");
@@ -94,10 +88,9 @@ namespace ConsoleApplication1
                     break;
             }
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel2()
+        static void Fel2()
         {
             Console.Clear();
             Console.Write("ax^2 + bx + c = 0\n");
@@ -123,10 +116,9 @@ namespace ConsoleApplication1
             else if (D < 0)
                 Console.Write("\nNincs valós megoldás");
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel3()
+        static void Fel3()
         {
             Console.Clear();
             //---------------------------------P1 pont
@@ -152,15 +144,16 @@ namespace ConsoleApplication1
             Console.Write("Normál vektor: n(" + -(p2y - py) + ";" + (p2x - px) + ")\n");
             Console.Write("Az egyenes egyenlete: " + -(p2y - py) + "x +" + (p2x - px) + "y = " +
                 -(p2y - py) * px + " + " + (p2x - px) * py);
-            Console.Write(" => " + -(p2y - py) + "x +" + (p2x - px) + "y = " + (-(p2y - py) * px + (p2x - px) * py+"\n\n"));
+            Console.Write(" => " + -(p2y - py) + "x +" + (p2x - px) + "y = " + (-(p2y - py) * px +
+                (p2x - px) * py+"\n\n"));
             Console.Write("x0: ");
             double x = Convert.ToDouble(Console.ReadLine());
-            Console.Write("y0: " + (-(p2y - py) * x - (-(p2y - py) * px + (p2x - px) * py)) / -(p2x - px));
+            Console.Write("y0: " + (-(p2y - py) * x - (-(p2y - py) * px + (p2x - px) * py)) / -
+                (p2x - px));
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel4()
+        static void Fel4()
         {
             Console.Clear();
             Console.Write("Évszám: ");
@@ -170,10 +163,9 @@ namespace ConsoleApplication1
             else
                 Console.Write("Nem szökőév");
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel5()
+        static void Fel5()
         {
             Console.Clear();
             Console.Write("Év: ");
@@ -198,10 +190,9 @@ namespace ConsoleApplication1
             Console.Write("A " + honap + ". hónap " + nap + " napos.");
 
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel6()
+        static void Fel6()
         {
             Console.Clear();
             Console.Write("Szám: ");
@@ -222,10 +213,9 @@ namespace ConsoleApplication1
                 Console.Write("Nem prím");
 
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel7()
+        static void Fel7()
         {
             Console.Clear();
             Console.Write("1. nebuló: ");
@@ -237,12 +227,10 @@ namespace ConsoleApplication1
             int osszeg = neb1 + neb2 + neb3;
             double atlag = osszeg / 3;
             Console.Write("Nebulók átlaga: " + atlag);
-            Console.ReadKey();
-            return true;
-            
+            Console.ReadKey();           
         }
 
-        static bool Fel8()
+        static void Fel8()
         {
             Console.Clear();
             Console.Write("Osztály létszám: ");
@@ -258,10 +246,9 @@ namespace ConsoleApplication1
             double atlag = ossz / osztaly.Length;
             Console.Write("Átlag: " + atlag);
             Console.ReadKey();
-            return true;
         }
 
-        static bool Fel9()
+        static void Fel9()
         {
             Console.Clear();
             Console.Write("Hány db betyű: ");
@@ -278,7 +265,149 @@ namespace ConsoleApplication1
             }
             Console.Write(szoveg);
             Console.ReadKey();
-            return true;
+        }
+
+        #region Fel01()
+        static void Fel10()
+        {
+            Console.Clear();
+            int[] magassagok = Tomb_fel();
+            //-------------------------------------------------
+            Console.Write("Mérések:\n");
+            for (int i = 0; i < magassagok.Length; i++)
+                Console.Write(magassagok[i] + "   ");
+            //-------------------------------------------------
+            int magas = Tomb_max(magassagok);
+            Console.Write("\n\nA(z) " + magas + ". indexnél található az első max, magassága: " + magassagok[magas]);
+            //------------------------------------------------
+            int maxdb = Tomb_maxdb(magassagok, magas);
+            Console.Write("\nA max magasság " + maxdb + " alkalommal szerepel");
+            //------------------------------------------------
+            int szhossz = Tomb_szhossz(magassagok);
+            Console.Write("\n\nA leghosszabb sziget hossza: " + szhossz);
+            //------------------------------------------------
+            bool szhossz_m = Tomb_szhossz_m(magassagok,magas);
+            if (szhossz_m)
+                Console.Write("\n rajta van");
+            else
+                Console.Write("\n nincs rajta");
+
+            Console.ReadKey();
+        }
+
+        static int[] Tomb_fel()
+        {
+            int[] tomb = new int[10];
+            Random R = new Random();
+            for (int i = 0; i < tomb.Length; i++)
+            {
+                if (R.Next(0, 11) <= 4)
+                    tomb[i] = R.Next(1, 11);
+                else
+                    tomb[i] = 0;
+            }
+            return tomb;
+        }
+
+        static int Tomb_max(int[] tomb)
+        {
+            int max = 0;
+            for (int i = 1; i < tomb.Length; i++)
+                if (tomb[max] < tomb[i])
+                    max = i;
+
+            return max;
+        }
+
+        static int Tomb_maxdb(int[] tomb, int max)
+        {
+            int db = 0;
+            for (int i = 0; i < tomb.Length; i++)
+                if (tomb[i] == tomb[max])
+                    db++;
+
+            return db;
+        }
+
+        static int Tomb_szhossz(int[] tomb)
+        {
+            int hossz = 0;
+            int seged = 0;
+            for (int i = 0; i < tomb.Length; i++)
+            {
+                if (tomb[i] != 0)
+                    hossz++;
+                else
+                {
+                    if (hossz > seged)
+                        seged = hossz;
+                    hossz = 0;
+                }
+            }
+            if (hossz > seged)
+                seged = hossz;
+            return seged;
+        }
+
+        static bool Tomb_szhossz_m(int[] tomb, int index)
+        {
+            int hossz = 0;
+            int seged = 0;
+            int seged2 = 0;
+            for (int i = 0; i < tomb.Length; i++)
+            {
+                if (tomb[i] != 0)
+                    hossz++;
+                else if (tomb[i] == 0)
+                {
+                    if (hossz > seged)
+                    {
+                        seged = hossz;
+                        seged2 = i - seged;
+                    }                    
+                    hossz = 0;
+                }
+            }
+            if (hossz > seged)
+            {
+                seged = hossz;
+                seged2 = tomb.Length - seged;
+            }
+            if (index >= seged2 && index <= (seged2 + seged))
+                return true;
+            else return false;
+        }
+        #endregion
+
+        static void Fel11()
+        {
+            #region feladat
+            //Egy játéktábla mezői kétféle módon vannak megjelölve (pl. 
+            //* és -). Kezdetben minden mező azonos jelölésű (-), kivéve 
+            //a játéktábla közepén lévő mező, valamint annak négy 
+            //közvetlen szomszédja. 
+            //A játék során a felhasználó megadja a játéktábla egy 
+            //koordinátáját. A kiválasztott koordinátájú mező, illetve 
+            //annak négy szomszédja az addigival ellentétes jelölésűre 
+            //változik. 
+            //A játék akkor ér véget, ha a felhasználó minden mezőt *-ra 
+            //tudott változtatni. 
+            //Készítse el a játszást lehetővé tevő programot!
+
+            //A játéktábla aktuális állapotát egy kétdimenziós logikai 
+            //tömbben tárolja el! 
+
+            //Megvalósítandó metódusok: 
+            //1. static void init(bool[,] game) 
+            //A játéktábla kezdeti állapotát előállító metódus 
+            //2. static string state(bool[,] game) 
+            //A játéktábla aktuális állapotát string formában megadó 
+            //metódus 
+            //3. static void shoot(bool[,] game, int x, int y) 
+            //Kiválasztott pontra „lövést” megvalósító metódus 
+            //4. static bool isOver(bool[,] game) 
+            //A metódus vizsgálja, hogy minden mező *-gá vált-e
+            #endregion
         }
     }
 }
