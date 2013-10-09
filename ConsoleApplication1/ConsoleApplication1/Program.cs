@@ -13,8 +13,9 @@ namespace ConsoleApplication1
             do
             {
                 Console.Clear();
-                Console.Write("1. feladat: 1\n2. feladat: 2\n3. feladat: 3\n4. feladat: 4\n5. feladat: 5"+
-                    "\n6. feladat: 6\n7. feladat: 7\na. feladat: a\nb. feladat: b\nc. feladat: c\nd. feladat: d");
+                Console.Write("1. feladat: 1\n2. feladat: 2\n3. feladat: 3\n4. feladat: 4\n5. feladat: 5" +
+                    "\n6. feladat: 6\n7. feladat: 7\nA. feladat: a\nB. feladat: b\nC. feladat: c\nD. feladat: d" +
+                    "\nE. feladat: e");
 
                 asd = Console.ReadKey();
                 switch (asd.Key)
@@ -58,6 +59,9 @@ namespace ConsoleApplication1
                         break;
                     case ConsoleKey.D:
                         Fel11();
+                        break;
+                    case ConsoleKey.E:
+                        Fel12();
                         break;
                     default:
                         break;
@@ -270,7 +274,7 @@ namespace ConsoleApplication1
             Console.ReadKey();
         }
 
-        #region Fel01()
+        #region Fel10()
         static void Fel10()
         {
             Console.Clear();
@@ -382,6 +386,7 @@ namespace ConsoleApplication1
         }
         #endregion
 
+        #region Fel11()
         static void Fel11()
         {
             #region feladat
@@ -478,6 +483,145 @@ namespace ConsoleApplication1
             if (db == 0)
                 return true;
             else return false;
+        }
+
+        #endregion
+
+        static void Fel12()
+        {
+            //Egy szerencsejátékos egy héten több lottószelvénnyel is 
+            //játszik. Mindegyik szelvényt véletlenszerűen tölt ki. 
+            //Készítsünk a játékos számára egy programot, amely „kitölti” 
+            //számára a szelvényeket, majd a húzást követően kiírja, hogy 
+            //melyik szelvénnyel hány találatot ért el! 
+            //(Az alkalmazás minden lottó típus esetén működjön, a +1 
+            //találatok kezelését kivéve!)
+
+            //A kitöltött szelvényeket egy kétdimenziós, a kihúzott számokat 
+            //pedig egy egydimenziós tömbben tárolja el! 
+            //Megvalósítandó metódusok: 
+            //1. static int[] GenerateDraw() 
+            //A kihúzott számokat előállító metódus 
+            //2. static string OutDraw(int[] t) 
+            //A kihúzott számok megjelenítését támogató metódus 
+            //3. static int[,] GenerateLotto() 
+            //A szelvényeket „kitöltő” metódus 
+            //4. static string OutLotto(int[,] t, int[] u) 
+            //A kitöltött szelvények és a találatok számának megjelenítését 
+            //támogató metódus 
+            //5. static bool Inside(int[] t, int value) 
+            //A metódus eldönti, hogy egy adott szám szerepel-e egy adott 
+            //szelvényen
+
+            Console.Clear();
+
+            int[] otos = GenerateDraw(5);
+            System.Threading.Thread.Sleep(50);
+            Console.Write("Az ötös lottó eheti nyerő számai:\n");
+            Console.Write(OutDraw(otos));
+            int[] hatos = GenerateDraw(6);
+            System.Threading.Thread.Sleep(50);
+            Console.Write("\nA hatos lottó eheti nyerő számai:\n");
+            Console.Write(OutDraw(hatos));
+            int[] hetes = GenerateDraw(7);
+            System.Threading.Thread.Sleep(50);
+            Console.Write("\nA hetes lottó eheti nyerő számai:\n");
+            Console.Write(OutDraw(hetes)+"\n");
+            int[,] sajat_szamok = GenerateLotto();
+            Console.Write(OutLotto(sajat_szamok, otos, hatos, hetes));
+
+
+            Console.ReadKey();
+        }
+        static int[] GenerateDraw(int a)
+        {
+            Random R = new Random();
+            int[] tomb = new int[a];
+            for (int i = 0; i < tomb.Length; i++)
+                tomb[i] = R.Next(0, 100);
+
+            return tomb;
+        }
+
+        static string OutDraw(int[] tomb)
+        {
+            string kiir = "";
+            for (int i = 0; i < tomb.Length; i++)
+                kiir += tomb[i] + "\t";
+
+            return kiir;
+        }
+
+        static int[,] GenerateLotto()
+        {
+            int[,] tomb = new int[3, 7];
+            Random R = new Random();
+            int i = 0;
+            for (int j = 0; j < 5; j++)
+                tomb[i, j] = R.Next(0, 100);
+            System.Threading.Thread.Sleep(50);
+            i++;
+            for (int j = 0; j < 6; j++)
+            tomb[i, j] = R.Next(0, 100);
+            System.Threading.Thread.Sleep(50);
+            i++;
+            for (int j = 0; j < 7; j++)
+                tomb[i, j] = R.Next(0, 100);
+
+            return tomb;
+        }
+
+        static string OutLotto(int[,] tomb, int[] lotto, int[] lotto2, int[] lotto3)
+        {
+            int i = 0;
+            int db = 0;
+            string vissza = "";
+            vissza = "\n\nA kitöltött szelvények: \nÖtös lottó:\n";
+            for (int j = 0; j < 5; j++)
+                vissza += tomb[i, j] + "   ";
+            i++;
+            vissza += "\nHatos lottó:\n";
+            for (int j = 0; j < 6; j++)
+                vissza += tomb[i, j] + "   ";
+            i++;
+            vissza += "\nHetes lottó:\n";
+            for (int j = 0; j < 7; j++)
+                vissza += tomb[i, j] + "   ";
+
+            vissza += "\n\nTalálatok:\n";
+            if (lotto.Length == 5)
+            {
+                db = 0;
+                i = 0;
+                for (int a = 0; a < lotto.Length; a++)
+                    for (int j = 0; j < 5; j++)
+                        if (tomb[i, j] == lotto[a])
+                            db++;
+                vissza += "Ötös lottón: " + db + ". db találat\n";
+            }
+            if (lotto2.Length == 6)
+            {
+                db = 0;
+                i = 1;
+                for (int a = 0; a < lotto2.Length; a++)
+                    for (int j = 0; j < 6; j++)
+                        if (tomb[i, j] == lotto2[a])
+                            db++;
+                vissza += "Hatos lottón: " + db + ". db találat\n";
+            }
+            if (lotto3.Length == 7)
+            {
+                db = 0;
+                i = 2;
+                for (int a = 0; a < lotto3.Length; a++)
+                    for (int j = 0; j < 7; j++)
+                        if (tomb[i, j] == lotto3[a])
+                            db++;
+                vissza += "Hetes lottón: " + db + ". db találat\n";
+            }
+
+
+            return vissza;
         }
     }
 }
