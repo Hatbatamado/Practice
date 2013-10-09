@@ -14,7 +14,7 @@ namespace ConsoleApplication1
             {
                 Console.Clear();
                 Console.Write("1. feladat: 1\n2. feladat: 2\n3. feladat: 3\n4. feladat: 4\n5. feladat: 5"+
-                    "\n6. feladat: 6\n7. feladat: 7\na. feladat: a\nb. feladat: b\nc. feladat: c");
+                    "\n6. feladat: 6\n7. feladat: 7\na. feladat: a\nb. feladat: b\nc. feladat: c\nd. feladat: d");
 
                 asd = Console.ReadKey();
                 switch (asd.Key)
@@ -55,6 +55,9 @@ namespace ConsoleApplication1
                         break;
                     case ConsoleKey.C:
                         Fel10();
+                        break;
+                    case ConsoleKey.D:
+                        Fel11();
                         break;
                     default:
                         break;
@@ -408,6 +411,73 @@ namespace ConsoleApplication1
             //4. static bool isOver(bool[,] game) 
             //A metódus vizsgálja, hogy minden mező *-gá vált-e
             #endregion
+            Console.Clear();
+            bool[,] tomb = new bool[5, 5];
+            init(tomb);
+            int x, y;
+            bool vege = false;
+
+            do
+            {
+                Console.Clear();
+                kiir(tomb);
+                Console.Write("\nLövés:\nX: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Y: ");
+                y = Convert.ToInt32(Console.ReadLine());
+                shoot(tomb, x, y);
+                vege = isOver(tomb);
+            } while (!vege);
+
+            Console.ReadKey();
+        }
+
+        static void kiir(bool[,] game)
+        {
+            for (int i = 0; i < game.GetLength(1); i++)
+            {
+                for (int j = 0; j < game.GetLength(0); j++)
+                    if (game[i, j] == true)
+                        Console.Write("+ ");
+                    else
+                        Console.Write("- ");
+                Console.Write("\n");
+            }
+        }
+
+        static void init(bool[,] game)
+        {
+            int felx = game.GetLength(1) / 2;
+            int fely = game.GetLength(0) / 2;
+
+            game[felx, fely] = true;
+            kiir(game);
+        }
+
+        static void shoot(bool[,] game, int x, int y)
+        {
+            if (x < game.GetLength(0) && y < game.GetLength(1))
+                game[x, y] = !game[x, y];
+            if ((y + 1) < game.GetLength(1))                   //jobbra
+                game[x, y + 1] = !game[x, y + 1];
+            if ((y - 1) >= 0 )                                  //balra
+                game[x, y - 1] = !game[x, y - 1];
+            if ((x + 1) < game.GetLength(0))                   //le
+                game[x + 1, y] = !game[x + 1, y];
+            if ((x - 1) >= 0)                                   //fel
+                game[x - 1, y] = !game[x - 1, y];
+        }
+
+        static bool isOver(bool[,] game)
+        {
+            int db = 0;
+            for (int i = 0; i < game.GetLength(1); i++)
+                for (int j = 0; j < game.GetLength(0); j++)
+                    if (game[i, j] == false)
+                        db++;
+            if (db == 0)
+                return true;
+            else return false;
         }
     }
 }
