@@ -647,7 +647,13 @@ namespace ConsoleApplication1
             }
             sr.Close();
 
-            Rekur(0, tomb[0].kat, tomb);
+            int s = 0;
+            while (s < max && tomb[s].anyag != 1)
+                s++;
+            if (s < max)
+                Rekur(s, tomb[s].kat, tomb);
+            else
+                Console.Write("Hogy állítsam elő fémből, ha nem adtál meg fémet? -.-");
 
             Console.ReadKey();
         }
