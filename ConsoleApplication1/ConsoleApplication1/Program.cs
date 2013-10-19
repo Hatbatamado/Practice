@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace ConsoleApplication1
 {
@@ -15,11 +16,12 @@ namespace ConsoleApplication1
                 Console.Clear();
                 Console.Write("1. feladat: 1\n2. feladat: 2\n3. feladat: 3\n4. feladat: 4\n5. feladat: 5" +
                     "\n6. feladat: 6\n7. feladat: 7\nA. feladat: a\nB. feladat: b\nC. feladat: c\nD. feladat: d" +
-                    "\nE. feladat: e");
+                    "\nE. feladat: e\nBeadando: f");
 
                 asd = Console.ReadKey();
                 switch (asd.Key)
                 {
+                    #region switch
                     case ConsoleKey.D1:
                     case ConsoleKey.NumPad1:
                         Fel1();
@@ -63,12 +65,17 @@ namespace ConsoleApplication1
                     case ConsoleKey.E:
                         Fel12();
                         break;
+                    case ConsoleKey.F:
+                        Beadando();
+                        break;
                     default:
                         break;
+                    #endregion
                 }
             } while (asd.Key != ConsoleKey.Escape);
         }
-
+        #region asd
+        #region Fel1-9
         static void Fel1()
         {
             Console.Clear();
@@ -273,7 +280,7 @@ namespace ConsoleApplication1
             Console.Write(szoveg);
             Console.ReadKey();
         }
-
+        #endregion
         #region Fel10()
         static void Fel10()
         {
@@ -486,7 +493,7 @@ namespace ConsoleApplication1
         }
 
         #endregion
-
+        #region Fel12()
         static void Fel12()
         {
             //Egy szerencsejátékos egy héten több lottószelvénnyel is 
@@ -570,7 +577,7 @@ namespace ConsoleApplication1
 
             return tomb;
         }
-
+        
         static string OutLotto(int[,] tomb, int[] lotto, int[] lotto2, int[] lotto3)
         {
             int i = 0;
@@ -622,6 +629,60 @@ namespace ConsoleApplication1
 
 
             return vissza;
+        }
+        #endregion
+        #endregion
+        static int max;
+        static void Beadando()
+        {
+            Console.Clear();
+            StreamReader sr = new StreamReader("asd.txt");
+            max = Convert.ToInt32(sr.ReadLine());
+            Bead[] tomb = new Bead[max];
+            string[] seged;
+            for (int i = 0; i < max; i++)
+            {
+                seged = sr.ReadLine().Split(' ');
+                tomb[i] = new Bead(Convert.ToInt32(seged[0]), seged[1], Convert.ToInt32(seged[2]));
+            }
+            sr.Close();
+
+            Rekur(0, tomb[0].kat, tomb);
+
+            Console.ReadKey();
+        }
+
+        static void Rekur(int i, string elemek, Bead[] tomb)
+        {
+            int elem = tomb[i].vegtermek;
+            int db = 0;
+            int a = 0;
+            for (int j = 0; j < max; j++)
+            {
+                if (j != i)
+                {
+                    if (tomb[j].anyag == elem)
+                    {
+                        db++;
+                        a = j;
+                    }
+                }
+            }
+            if (db == 0 && (i + 1) < max)
+            {
+                ++i;
+                elemek = tomb[i].kat;
+                Rekur(i, elemek, tomb);
+            }
+            else if (db == 1)
+            {
+                i = a;
+                elemek += ' ' + tomb[i].kat;
+                if (tomb[i].vegtermek != 0)
+                    Rekur(i, elemek, tomb);
+            }
+            else
+                Console.Write(elemek);
         }
     }
 }
