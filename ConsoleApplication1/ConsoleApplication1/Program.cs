@@ -634,6 +634,7 @@ namespace ConsoleApplication1
         #endregion
         static int max;
         static int elem_veg = 0;
+        static int elem = 0;
         static void Beadando()
         {
             Console.Clear();
@@ -655,9 +656,11 @@ namespace ConsoleApplication1
                     s++;
                 if (s < max)
                 {
+                    elem = s;
                     string[] elemek = new string[1000];
                     elemek[elem_veg] = tomb[s].kat;
-                    Rekur(s, elemek, tomb);
+                    string felhasznalt_anyagok = tomb[s].anyag.ToString();
+                    Rekur(s, elemek, tomb, felhasznalt_anyagok);
                 }
                 else
                     Console.Write("Hogy állítsam elő fémből, ha nem adtál meg fémet? -.-");
@@ -668,7 +671,7 @@ namespace ConsoleApplication1
             Console.ReadKey();
         }
 
-        static void Rekur(int i, string[] elemek, Bead[] tomb)
+        static void Rekur(int i, string[] elemek, Bead[] tomb, string felhasznalt_anyagok)
         {
             if (tomb[i].vegtermek != 0)
             {
@@ -688,29 +691,82 @@ namespace ConsoleApplication1
                 }
                 if (db == 0 && (i + 1) < max)
                 {
+                    //ugrás köv ezüstre
                     ++i;
                     while (i < max && tomb[i].anyag != 1)
                         i++;
                     if (i < max)
                     {
-                        elemek[elem_veg] = tomb[i].kat;
-                        Rekur(i, elemek, tomb);
+                        elem = i;
+                        elemek[elem_veg] = " " + tomb[i].kat;
+                        Rekur(i, elemek, tomb, tomb[i].anyag.ToString());
                     }
+                    else
+                        Console.Write("Vége - D"); //TODO: vége
                 }
                 else if (db == 1)
                 {
+                    //ugrás a köv szükséges katalizátorra
                     i = a;
-                    elemek[elem_veg] += ' ' + tomb[i].kat;
-                    Rekur(i, elemek, tomb);
+                    if (Ellenorzes2(felhasznalt_anyagok, tomb[i].anyag))
+                    {
+                        elemek[elem_veg] += " " + tomb[i].kat;
+                        felhasznalt_anyagok += " " + tomb[i].anyag.ToString();
+                        Rekur(i, elemek, tomb, felhasznalt_anyagok);
+                    }
+                    else //önmaga
+                    {
+                        //köv ezüstre ugrás ha van
+                        int s = i + 1;
+                        while (s < max && tomb[s].anyag != 1)
+                            s++;
+                        if (s < max)
+                        {
+                            elem = s;
+                            Rekur(s, elemek, tomb, tomb[s].anyag.ToString());
+                        }
+                        else
+                            Console.Write("Vége - A"); //TODO: vége
+                    }
                 }
                 else
-                    Kiir(elemek); //TODO: db > 1
+                {   //önmaga többször szerepel
+                    if (!Ellenorzes2(felhasznalt_anyagok, tomb[i].vegtermek))
+                    {
+                        //köv ezüstre ugrás ha van
+                        int s = i + 1;
+                        while (s < max && tomb[s].anyag != 1)
+                            s++;
+                        if (s < max)
+                        {
+                            elem = s;
+                            Rekur(s, elemek, tomb, tomb[s].anyag.ToString());
+                        }
+                        else
+                            Console.Write("Vége - B"); //TODO: vége
+                    }
+                    else
+                    {
+                        //TODO: db > 1
+                        Console.Write("TODO");
+                    }
+                }
             }
             else
             {
-                elemek[elem_veg++] += " " + tomb[i].kat;
-                if ((i + 1) < max)
-                    Rekur(++i, elemek, tomb);
+                elem_veg++;
+                //ugrás a köv ezüstre, ha van
+                int s = ++elem;
+                while (s < max && tomb[s].anyag != 1)
+                    s++;
+                if (s < max)
+                {
+                    elem = s;
+                    elemek[elem_veg] = " " + tomb[s].kat;
+                    Rekur(s, elemek, tomb, tomb[s].anyag.ToString());
+                }
+                else
+                    Console.Write("Vége - C"); //TODO: vége
             }
         }
 
@@ -718,9 +774,7 @@ namespace ConsoleApplication1
         {
             int i = 0;
             while (i < elemek.Length && elemek[i] != null)
-            {
-                Console.Write(elemek[i++]);
-            }
+                Console.WriteLine(elemek[i++]);
         }
 
         static bool Ellenorzes(Bead[] tomb)
@@ -734,6 +788,17 @@ namespace ConsoleApplication1
                         tomb[i].vegtermek == tomb[j].vegtermek)
                         van = true;
             return van;
+        }
+
+        static bool Ellenorzes2(string felhasznalt_anyagok, int kov_elem)
+        {
+            //egyetlen anyag sem állítható elő önmagából, egy vagy több lépésben sem
+            bool mehet = true;
+            string[] seged = felhasznalt_anyagok.Split(' ');
+            for (int i = 0; i < seged.Length; i++)
+                if (Convert.ToInt32(seged[i]) == kov_elem)
+                    mehet = false;
+            return mehet;
         }
     }
 }
