@@ -648,18 +648,23 @@ namespace ConsoleApplication1
             }
             sr.Close();
 
-            int s = 0;
-            while (s < max && tomb[s].anyag != 1)
-                s++;
-            if (s < max)
+            if (!Ellenorzes(tomb))
             {
-                string[] elemek = new string[1000];
-                elemek[elem_veg] = tomb[s].kat;
-                Rekur(s, elemek, tomb);
+                int s = 0;
+                while (s < max && tomb[s].anyag != 1)
+                    s++;
+                if (s < max)
+                {
+                    string[] elemek = new string[1000];
+                    elemek[elem_veg] = tomb[s].kat;
+                    Rekur(s, elemek, tomb);
+                }
+                else
+                    Console.Write("Hogy állítsam elő fémből, ha nem adtál meg fémet? -.-");
             }
             else
-                Console.Write("Hogy állítsam elő fémből, ha nem adtál meg fémet? -.-");
-
+                Console.Write("Van olyan két különböző bejegyzés, amelyekben mind az első,"
+            + " mind a második anyag megegyezne\nJavítsd ki a file-t");
             Console.ReadKey();
         }
 
@@ -699,7 +704,7 @@ namespace ConsoleApplication1
                     Rekur(i, elemek, tomb);
                 }
                 else
-                    Kiir(elemek);
+                    Kiir(elemek); //TODO: db > 1
             }
             else
             {
@@ -716,6 +721,19 @@ namespace ConsoleApplication1
             {
                 Console.Write(elemek[i++]);
             }
+        }
+
+        static bool Ellenorzes(Bead[] tomb)
+        {
+            //továbbá nincs két különböző bejegyzés, amelyekben mind az első,
+            //mind a második anyag megegyezne
+            bool van = false;
+            for (int i = 0; i < max; i++)
+                for (int j = i + 1; j < max - 1; j++)
+                    if (tomb[i].anyag == tomb[j].anyag &&
+                        tomb[i].vegtermek == tomb[j].vegtermek)
+                        van = true;
+            return van;
         }
     }
 }
