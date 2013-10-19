@@ -633,6 +633,7 @@ namespace ConsoleApplication1
         #endregion
         #endregion
         static int max;
+        static int elem_veg = 0;
         static void Beadando()
         {
             Console.Clear();
@@ -651,14 +652,18 @@ namespace ConsoleApplication1
             while (s < max && tomb[s].anyag != 1)
                 s++;
             if (s < max)
-                Rekur(s, tomb[s].kat, tomb);
+            {
+                string[] elemek = new string[1000];
+                elemek[elem_veg] = tomb[s].kat;
+                Rekur(s, elemek, tomb);
+            }
             else
                 Console.Write("Hogy állítsam elő fémből, ha nem adtál meg fémet? -.-");
 
             Console.ReadKey();
         }
 
-        static void Rekur(int i, string elemek, Bead[] tomb)
+        static void Rekur(int i, string[] elemek, Bead[] tomb)
         {
             if (tomb[i].vegtermek != 0)
             {
@@ -683,24 +688,33 @@ namespace ConsoleApplication1
                         i++;
                     if (i < max)
                     {
-                        elemek = tomb[i].kat;
+                        elemek[elem_veg] = tomb[i].kat;
                         Rekur(i, elemek, tomb);
                     }
                 }
                 else if (db == 1)
                 {
                     i = a;
-                    elemek += ' ' + tomb[i].kat;
-                    if (tomb[i].vegtermek != 0)
-                        Rekur(i, elemek, tomb);
+                    elemek[elem_veg] += ' ' + tomb[i].kat;
+                    Rekur(i, elemek, tomb);
                 }
                 else
-                    Console.Write(elemek);
+                    Kiir(elemek);
             }
             else
             {
-                elemek += " " + tomb[i].kat;
-                Console.Write(elemek);
+                elemek[elem_veg++] += " " + tomb[i].kat;
+                if ((i + 1) < max)
+                    Rekur(++i, elemek, tomb);
+            }
+        }
+
+        static void Kiir(string[] elemek)
+        {
+            int i = 0;
+            while (i < elemek.Length && elemek[i] != null)
+            {
+                Console.Write(elemek[i++]);
             }
         }
     }

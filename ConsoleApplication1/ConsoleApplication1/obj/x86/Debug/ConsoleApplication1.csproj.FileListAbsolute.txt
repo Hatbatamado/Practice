@@ -8,3 +8,8 @@ C:\Users\Nakia\Desktop\progik\bot\git\ConsoleApplication1\ConsoleApplication1\ob
 C:\Users\Nakia\Desktop\progik\bot\git\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
 C:\Users\Nakia\Desktop\progik\bot\git\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
 C:\Users\Nakia\Desktop\progik\bot\git\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Nakia\Desktop\progik\bot\git\Practice\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+C:\Users\Nakia\Desktop\progik\bot\git\Practice\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb
+C:\Users\Nakia\Desktop\progik\bot\git\Practice\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\Nakia\Desktop\progik\bot\git\Practice\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Nakia\Desktop\progik\bot\git\Practice\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
