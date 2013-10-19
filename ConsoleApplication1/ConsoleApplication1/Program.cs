@@ -654,35 +654,48 @@ namespace ConsoleApplication1
 
         static void Rekur(int i, string elemek, Bead[] tomb)
         {
-            int elem = tomb[i].vegtermek;
-            int db = 0;
-            int a = 0;
-            for (int j = 0; j < max; j++)
+            if (tomb[i].vegtermek != 0)
             {
-                if (j != i)
+                int elem = tomb[i].vegtermek;
+                int db = 0;
+                int a = 0;
+                for (int j = 0; j < max; j++)
                 {
-                    if (tomb[j].anyag == elem)
+                    if (j != i)
                     {
-                        db++;
-                        a = j;
+                        if (tomb[j].anyag == elem)
+                        {
+                            db++;
+                            a = j;
+                        }
                     }
                 }
-            }
-            if (db == 0 && (i + 1) < max)
-            {
-                ++i;
-                elemek = tomb[i].kat;
-                Rekur(i, elemek, tomb);
-            }
-            else if (db == 1)
-            {
-                i = a;
-                elemek += ' ' + tomb[i].kat;
-                if (tomb[i].vegtermek != 0)
-                    Rekur(i, elemek, tomb);
+                if (db == 0 && (i + 1) < max)
+                {
+                    ++i;
+                    while (i < max && tomb[i].anyag != 1)
+                        i++;
+                    if (i < max)
+                    {
+                        elemek = tomb[i].kat;
+                        Rekur(i, elemek, tomb);
+                    }
+                }
+                else if (db == 1)
+                {
+                    i = a;
+                    elemek += ' ' + tomb[i].kat;
+                    if (tomb[i].vegtermek != 0)
+                        Rekur(i, elemek, tomb);
+                }
+                else
+                    Console.Write(elemek);
             }
             else
+            {
+                elemek += " " + tomb[i].kat;
                 Console.Write(elemek);
+            }
         }
     }
 }
